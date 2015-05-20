@@ -30,4 +30,6 @@ public class Stock {
 	public void setRiskiness(double riskiness) {
 		this.riskiness = riskiness;
 	}
+	
+	
 }
