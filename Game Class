@@ -34,5 +34,22 @@ public class Game {
 	public void chooseStocks(){
 		
 	}
+	public void events(){
+	
+	  Random rnd = new Random();
+	  int num = rdn.nextInt(10)+1;
+	  switch(num){
+	 
+	    //event for stock 1
+	    case 1: int possibility = rdn.nextInt(100)+1;
+	            if(possibility <= 75)
+	            else if(possibility <= 80)
+	            System.out.println("New product/technology made by " + stock[num] + "!");
+	            System.out.println("Stock value increase 10!");
+	            stock[num].set
+	 
+	}
+	
+	
 	
 }
