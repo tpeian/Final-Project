@@ -1,5 +1,33 @@
-public class Stock{
 
+public class Stock {
 
-
+	private String name;
+	private double price; //$.01-$9999999.99
+	private double riskiness; //.01-.99
+	
+	
+	//Getters and setters
+	public String getName() {
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public double getPrice() {
+		return price;
+	}
+	
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	public double getRiskiness() {
+		return riskiness;
+	}
+	
+	public void setRiskiness(double riskiness) {
+		this.riskiness = riskiness;
+	}
 }
