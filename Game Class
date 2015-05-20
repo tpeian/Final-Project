@@ -24,7 +24,7 @@ public class Game {
 	public void game(){
 		System.out.println("How many months would you like to participate in the stock exchange?");
 		months = scan.nextInt();
-		System.out.println("Here are your stocks");
+		System.out.println("Here are your stocks: ");
 		for (int i = 0; i < stocks.length; i++){
 			System.out.println("Stock " + (i+1) + ": " + stocks[i].toString());
 		}
