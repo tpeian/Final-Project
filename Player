@@ -1,0 +1,10 @@
+public class Player {
+	private String name;
+	private double money;
+	
+	public Player(String name){
+		this.name = name;
+		money = 5000;
+	}
+	
+}
