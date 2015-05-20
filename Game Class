@@ -1,15 +1,36 @@
-
 import java.util.Scanner;
 
 public class Game {
-
+	
+	Scanner scan = new Scanner(System.in);
+	private int months;
+	Stock stock1 = new Stock("BAC", 17.00, .05);
+	Stock stock2 = new Stock("Yahoo", 45.00, .1);
+	Stock stock3 = new Stock("Apple", 130.00, .08);
+	Stock stock4 = new Stock("Starbcks", 52.00, .06);
+	Stock stock5 = new Stock("Celadon", 6.00, .45);
+	Stock stock6 = new Stock("Inx", 3.00, .9);
+	Stock stock7 = new Stock("MMM", 300.00, .01);
+	Stock stock8 = new Stock("Boeing", 150.00, .02);
+	Stock stock9 = new Stock("Intel", 35.00, .12);
+	Stock stock10 = new Stock("Nike", 105.00, .03);
+	private Stock[] stocks = {stock1, stock2, stock3, stock4, stock5, stock6, stock7, stock8, stock9, stock10};
 	
 	public Game(){
-
+		Player player = new Player();
+		game();
 	}
 	
-	
-	
+	public void game(){
+		System.out.println("How many months would you like to participate in the stock exchange?");
+		months = scan.nextInt();
+		System.out.println("Here are your stocks");
+		for (int i = 0; i < stocks.length; i++){
+			System.out.println("Stock " + (i+1) + ": " + stocks[i].toString());
+		}
+		
+	}
+		
 	
 	
 }
