@@ -38,7 +38,7 @@ public class Stock {
 	}
 	
 	public String toString(){
-		return ("Name: " + this.name + " Current Value: $" + this.price + " Average growth/decline rate: " + this.riskiness*100 + "%");
+		return ("Name: " + this.name + "	Current Value: $" + this.price + "	Average growth/decline rate: " + this.riskiness*100 + "%");
 	}
 }
 
