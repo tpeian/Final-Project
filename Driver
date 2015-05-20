@@ -1,1 +1,21 @@
 
+import java.util.Scanner;
+
+
+public class Driver {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		String play;
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Would you like to buy some stocks?");
+		play = scan.nextLine();
+		if (play.equalsIgnoreCase("yes")){
+			Game game = new Game();
+		}
+		else
+			System.out.println("Thanks for playing.");
+	}
+
+}
