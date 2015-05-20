@@ -3,15 +3,12 @@ import java.util.Scanner;
 
 public class Game {
 
-	private String play;
 	
 	public Game(){
-		
+
 	}
 	
-	Scanner scan = new Scanner(System.in);
-	System.out.println("Would you like to buy some stocks?");
-	play = scan.nextLine();
+	
 	
 	
 	
