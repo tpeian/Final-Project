@@ -36,17 +36,32 @@ public class Game {
 	}
 	public void events(){
 	
-	  Random rnd = new Random();
-	  int num = rdn.nextInt(10)+1;
-	  switch(num){
-	 
-	    //event for stock 1
-	    case 1: int possibility = rdn.nextInt(100)+1;
+	 Random rnd = new Random();
+	 int num = rdn.nextInt(10)+1;
+	 int possibility = rdn.nextInt(100)+1;
 	            if(possibility <= 75)
 	            else if(possibility <= 80)
-	            System.out.println("New product/technology made by " + stock[num] + "!");
-	            System.out.println("Stock value increase 10!");
-	            stock[num].set
+	            	System.out.println("New product/technology made by " + stock[num].getName() + "!");
+	            	System.out.println("Stock value increase 10!");
+	            	stock[num].setPrice(stock[num].getPrice + 10);
+	            else if(possibility <= 90)
+	                if(stock[num].getPrice() > 15)
+	                System.out.println("A few flaw/bug is found in the product of " + stock[num].getName() + "!");
+	                System.out.println("Stock value decrease 15!");
+	                stock[num].setPrice(stock[num].getPrice() - 15);
+	            else if(possibility <= 93)
+	            	System.out.println(stock[num].getName()+" is changing a new CEO!");
+	            	System.out.println("Stock value is randomized!");
+	            	stock[num].setPrice(stock[num] + rnd.nextInt(10) + 1 - rnd.nextInt(10));
+	            else if(possibility <= 97)
+	            	if(stock[num].getPrice() > 20)
+	            	System.out.println(stock[num].getName() + "'s server has been hacked!");
+	            	System.out.println("Stock Value decrease 20!");
+	            	stock[num].setPrice(stock[num].getPrice() - 20);
+	            else if(possibility <= 100)
+	            	System.out.println("Large amount of people invested in " stock[num].getName() + "!");
+	            	System.out.println("Stock value increase 15!");
+	            	stock[num].setPrice(stock[num].getPrice + 15);
 	 
 	}
 	
