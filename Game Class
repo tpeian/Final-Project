@@ -64,6 +64,9 @@ public class Game {
 	            	stock[num].setPrice(stock[num].getPrice + 15);
 	 
 	}
+	public void changes(){
+	  
+	}
 	
 	
 	
