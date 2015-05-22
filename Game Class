@@ -2,7 +2,10 @@ import java.util.*;
 
 public class Game {
 	
-	Scanner scan = new Scanner(System.in);
+	private int stockCount = 0;
+	ArrayList<Stock> myStocks;	
+	Scanner stringScan = new Scanner(System.in);
+	Scanner intScan = new Scanner(System.in);
 	private int months;
 	Stock stock1 = new Stock("BAC", 17.00, .05);
 	Stock stock2 = new Stock("Yahoo", 45.00, .1);
@@ -32,7 +35,21 @@ public class Game {
 	}
 		
 	public void chooseStocks(){
-		
+		String chosenStock = "";
+		System.out.println("Please enter a stock name. If you are done choosing stocks, enter \"done\".");
+		chosenStock = stringScan.nextLine();
+		if (chosenStock != "done"){
+			for (int i = 0; i < stocks.length; i++){
+				if (chosenStock.equalsIgnoreCase(stocks[i].getName())){
+					myStocks.add(stocks[i]);
+					chooseStocks();
+				}
+			}
+			System.out.print("Invalid input. ");
+		}
+		else{
+			//Method here
+		}
 	}
 	public void events(){
 	
