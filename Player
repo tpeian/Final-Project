@@ -2,8 +2,7 @@ public class Player {
 	private String name;
 	private double money;
 	
-	public Player(String name){
-		this.name = name;
+	public Player(){
 		money = 5000;
 	}
 	
