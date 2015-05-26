@@ -1,12 +1,19 @@
+
+	
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Game {
-	
+
 	private int stockCount = 0;
-	ArrayList<Stock> myStocks;	
+	ArrayList<Stock> myStocks = new ArrayList<Stock>(10);	
 	Scanner stringScan = new Scanner(System.in);
 	Scanner intScan = new Scanner(System.in);
+	//new DecimalFormat("#.##").format(dblVar);
 	private int months;
+	private double originalPrice = 0;
+	private double finalPrice = 0;
+	private double currentPrice = 0;
 	Stock stock1 = new Stock("BAC", 17.00, .05);
 	Stock stock2 = new Stock("Yahoo", 45.00, .1);
 	Stock stock3 = new Stock("Apple", 130.00, .08);
@@ -20,36 +27,80 @@ public class Game {
 	private Stock[] stocks = {stock1, stock2, stock3, stock4, stock5, stock6, stock7, stock8, stock9, stock10};
 	
 	public Game(){
-		Player player = new Player();
+		//Player player = new Player();
 		game();
 	}
 	
 	public void game(){
 		System.out.println("How many months would you like to participate in the stock exchange?");
-		months = scan.nextInt();
+		months = intScan.nextInt();
 		System.out.println("Here are your stocks: ");
 		for (int i = 0; i < stocks.length; i++){
 			System.out.println("Stock " + (i+1) + ": " + stocks[i].toString());
 		}
-		
+		System.out.println();
+		chooseStocks();
 	}
 		
 	public void chooseStocks(){
 		String chosenStock = "";
 		System.out.println("Please enter a stock name. If you are done choosing stocks, enter \"done\".");
 		chosenStock = stringScan.nextLine();
-		if (chosenStock != "done"){
+		if (chosenStock.equals("done") == false){
 			for (int i = 0; i < stocks.length; i++){
 				if (chosenStock.equalsIgnoreCase(stocks[i].getName())){
 					myStocks.add(stocks[i]);
 					chooseStocks();
 				}
 			}
-			System.out.print("Invalid input. ");
 		}
 		else{
-			//Method here
+			simulate();
 		}
+	}
+	
+	public void simulate(){
+		originalPrice = netWorth();
+		for (int i = 0; i < months; i++){
+			for (int j = 0; j < myStocks.size(); j++){
+				monthlyValueUpdate(myStocks.get(j));
+			}
+			System.out.print("Month " + (i + 1) + " update: ");
+			for (int k = 0; k < myStocks.size(); k++){
+				System.out.print(myStocks.get(k).getName() + ": $" + roundTwoDecimals(myStocks.get(k).getValue()) + "	");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		finalPrice = netWorth();
+		display();
+	}
+	
+	public void monthlyValueUpdate(Stock myStock){
+		double r = myStock.getRiskiness() * Math.random();
+		int posNeg = (int) (Math.random() * 100);
+		if (posNeg >= 19){
+			myStock.setValue(myStock.getValue() + (myStock.getValue() * r));
+		}
+		else
+			myStock.setValue(myStock.getValue() - (myStock.getValue() * r));
+	}
+	
+	public double netWorth(){
+		double value = 0;
+		for (int i = 0; i < myStocks.size(); i++){
+			value += myStocks.get(i).getValue();
+		}
+		return value;
+	}
+	
+	public double roundTwoDecimals(double d){
+		DecimalFormat twoDForm = new DecimalFormat("#.##");
+		return Double.valueOf(twoDForm.format(d));
+	}
+	
+	public void display(){
+		System.out.println("Original value of stocks = $" + roundTwoDecimals(originalPrice) + "\nFinal value of stocks = $" + roundTwoDecimals(finalPrice));
 	}
 	public void events(){
 	
