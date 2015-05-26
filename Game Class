@@ -129,13 +129,10 @@ public class Game {
 	            else if(possibility <= 100)
 	            	System.out.println("Large amount of people invested in " stock[num].getName() + "!");
 	            	System.out.println("Stock value increase 15!");
-	            	stock[num].setPrice(stock[num].getPrice + 15);
+	            	stock[num].setPrice(stock[num].getPrice + (stock[num].getPrice*0.15));
 	 
 	}
-	public void changes(){
-	  
-	}
-	
+
 	
 	
 }
