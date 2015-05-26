@@ -1,14 +1,17 @@
+import java.util.Random;
+
 
 public class Stock {
 
+	Random rand = new Random();
 	private String name;
-	private double price; //$.01-$9999999.99
+	private double value; //$.01-$9999999.99
 	private double riskiness; //.01-.99
 	
 	//Constructor
-	public Stock(String name, double price, double riskiness){
+	public Stock(String name, double value, double riskiness){
 		this.name = name;
-		this.price = price;
+		this.value = value;
 		this.riskiness = riskiness;
 	}
 	
@@ -21,12 +24,12 @@ public class Stock {
 		this.name = name;
 	}
 	
-	public double getPrice() {
-		return price;
+	public double getValue() {
+		return value;
 	}
 	
-	public void setPrice(double price) {
-		this.price = price;
+	public void setValue(double value) {
+		this.value = value;
 	}
 	
 	public double getRiskiness() {
@@ -38,7 +41,8 @@ public class Stock {
 	}
 	
 	public String toString(){
-		return ("Name: " + this.name + "	Current Value: $" + this.price + "	Average growth/decline rate: " + this.riskiness*100 + "%");
+		return ("Name: " + this.name + "	Current Value: $" + this.value + "	Average growth/decline rate: " + this.riskiness*100 + "%");
 	}
+	
 }
 
