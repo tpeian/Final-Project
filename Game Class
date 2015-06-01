@@ -1,5 +1,4 @@
 
-
 	
 import java.text.DecimalFormat;
 import java.util.*;
@@ -26,6 +25,11 @@ public class Game {
 	Stock stock9 = new Stock("Intel", 35.00, .12);
 	Stock stock10 = new Stock("Nike", 105.00, .03);
 	private Stock[] stocks = {stock1, stock2, stock3, stock4, stock5, stock6, stock7, stock8, stock9, stock10};
+	ArrayList<Integer> numStocks = new ArrayList<Integer>(10);
+	private int numChosen = 0;
+	private int plus = (int) (Math.random() * 40) - 10;
+	private double overallRisk;
+	
 	
 	public Game(){
 		//Player player = new Player();
@@ -48,14 +52,22 @@ public class Game {
 		System.out.println("Please enter a stock name. If you are done choosing stocks, enter \"done\".");
 		chosenStock = stringScan.nextLine();
 		if (chosenStock.equals("done") == false){
+			System.out.println("Please select how many of that stock you would like to buy.");
+			numChosen = intScan.nextInt();
 			for (int i = 0; i < stocks.length; i++){
 				if (chosenStock.equalsIgnoreCase(stocks[i].getName())){
 					myStocks.add(stocks[i]);
+					stocks[i].setNumber(numChosen);
 					chooseStocks();
 				}
 			}
 		}
 		else{
+			int numerator = 0;
+			for (int i = 0; i < myStocks.size(); i++){
+				numerator += myStocks.get(i).getRiskiness();
+			}
+			overallRisk = numerator / myStocks.size();
 			simulate();
 		}
 	}
@@ -71,7 +83,7 @@ public class Game {
 			events();
 			System.out.print((i + 1) + ": ");
 			for (int k = 0; k < myStocks.size(); k++){
-				System.out.print(myStocks.get(k).getName() + ": $" + roundTwoDecimals(myStocks.get(k).getValue()) + "	");
+				System.out.print(myStocks.get(k).getName() + "(" + myStocks.get(k).getNumber() + "): $" + roundTwoDecimals(myStocks.get(k).getValue()) + "	");
 			}
 			System.out.println();
 		}
@@ -83,7 +95,7 @@ public class Game {
 	public void monthlyValueUpdate(Stock myStock){
 		double r = myStock.getRiskiness() * Math.random();
 		int posNeg = (int) ((Math.random() * 100) + 1);
-		if (posNeg >= (myStock.getRiskiness() * 100)){
+		if (posNeg >= ((myStock.getRiskiness() * 100) + plus)){
 			myStock.setValue(myStock.getValue() + (myStock.getValue() * r));
 		}
 		else
@@ -93,7 +105,7 @@ public class Game {
 	public double netWorth(){
 		double value = 0;
 		for (int i = 0; i < myStocks.size(); i++){
-			value += myStocks.get(i).getValue();
+			value += (myStocks.get(i).getValue()) * myStocks.get(i).getNumber();
 		}
 		return value;
 	}
@@ -112,18 +124,18 @@ public class Game {
 		 Random rnd = new Random();
 		 int num = rnd.nextInt(myStocks.size());
 		 int possibility = rnd.nextInt(100)+1;
-		            if(possibility <= 50){
+		            if(possibility <= 70){
 		            	
 		            }
-		            else if(possibility <= 80){
+		            else if(possibility <= 75){
 		            	System.out.println();
 		            	System.out.println("\tNew product/technology made by " + myStocks.get(num).getName() + "!");
 		            	System.out.println("\tStock value increase 10%!");
 		            	System.out.println();
 		            	myStocks.get(num).setValue(myStocks.get(num).getValue() +(myStocks.get(num).getValue() * 0.10));
 		            }
-		            else if(possibility <= 90){
-		                if(myStocks.get(num).getValue() > 15){
+		            else if(possibility <= 88){
+		                if(myStocks.get(num).getValue() > 35){
 		                	System.out.println();
 		                	System.out.println("\tA few flaw/bug is found in the product of " + myStocks.get(num).getName() + "!");
 			                System.out.println("\tStock value decrease 15%!");
@@ -131,14 +143,14 @@ public class Game {
 			                myStocks.get(num).setValue(myStocks.get(num).getValue() -(myStocks.get(num).getValue() * 0.35));
 		                }
 		            }
-		            else if(possibility <= 93){
+		            else if(possibility <= 90){
 		            	System.out.println();
 		            	System.out.println("\t" + myStocks.get(num).getName() +" is changing a new CEO!");
 		            	System.out.println("\tStock value is randomized!");
 		            	System.out.println();
-		            	myStocks.get(num).setValue(myStocks.get(num).getValue() + (rnd.nextInt(10) + 1) * myStocks.get(num).getValue());
+		            	myStocks.get(num).setValue(myStocks.get(num).getValue() + (rnd.nextDouble() * (2 * myStocks.get(num).getRiskiness()) - myStocks.get(num).getRiskiness()) * (myStocks.get(num).getRiskiness() * 2));
 		            }
-		            else if(possibility <= 97){
+		            else if(possibility <= 98){
 		            	if(myStocks.get(num).getValue() > 20){
 		            		System.out.println();
 		            		System.out.println("\t" + myStocks.get(num).getName() + "'s server has been hacked!");
