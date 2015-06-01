@@ -95,7 +95,7 @@ public class Game {
 	public void monthlyValueUpdate(Stock myStock){
 		double r = myStock.getRiskiness() * Math.random();
 		int posNeg = (int) ((Math.random() * 100) + 1);
-		if (posNeg >= ((myStock.getRiskiness() * 100) + plus)){
+		if (posNeg <= 50){
 			myStock.setValue(myStock.getValue() + (myStock.getValue() * r));
 		}
 		else
