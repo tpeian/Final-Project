@@ -72,6 +72,20 @@ public class Game {
 		}
 	}
 	
+	public void sellStocks(){
+		String chosenStock = "";
+		System.out.println("Please enter a stock name. If you are done choosing stocks, enter \"done\".");
+		chosenStock = stringScan.nextLine();
+		if (chosenStock.equals("done") == false){
+			System.out.println("Please select how many of that stock you would like to sell.");
+			numChosen = intScan.nextInt();
+			for (int i = 0; i < myStocks.size(); i++){
+				if (chosenStock.equalsIgnoreCase(myStocks.get(i).getName())){
+					myStocks.get(i).setNumber(numChosen);
+					sellStocks();
+			}
+	}
+	
 	public void simulate(){
 		originalPrice = netWorth();
 		System.out.println();
