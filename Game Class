@@ -71,7 +71,7 @@ public class Game {
 			simulate();
 		}
 	}
-	
+	//ian
 	public void sellStocks(){
 		String chosenStock = "";
 		System.out.println("Please enter a stock name. If you are done choosing which stocks to sell, enter \"done\".");
@@ -85,7 +85,37 @@ public class Game {
 					sellStocks();
 			}
 	}
-	
+	//stefa
+	public void simulate(){
+		originalPrice = netWorth();
+		System.out.println("Original value: $" + originalPrice);
+		System.out.println();
+		System.out.println("Progress one month: press space then enter");
+		System.out.println("Check progress: enter \"check\"");
+		spaceUpdate();
+	}
+	//stefan
+	public void spaceUpdate(){
+		space = stringScan.nextLine();
+		if (space.equals(" ")){
+			for (int j = 0; j < myStocks.size(); j++){
+				monthlyValueUpdate(myStocks.get(j));
+			}
+			events();
+			System.out.print((month + 1) + ": ");
+			for (int k = 0; k < myStocks.size(); k++){
+				System.out.print(myStocks.get(k).getName() + "(" + myStocks.get(k).getNumber() + "): $" + roundTwoDecimals(myStocks.get(k).getValue()) + "	");
+			}
+			month++;
+			space = null;
+			spaceUpdate();
+		}
+		else if (space.equals("check")){
+			System.out.println("Current value: $" + roundTwoDecimals(netWorth()));
+			spaceUpdate();
+		}
+	}
+	//ian
 	public void simulate(){
 		originalPrice = netWorth();
 		System.out.println();
