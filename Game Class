@@ -81,7 +81,8 @@ public class Game {
 			numChosen = intScan.nextInt();
 			for (int i = 0; i < myStocks.size(); i++){
 				if (chosenStock.equalsIgnoreCase(myStocks.get(i).getName())){
-					myStocks.get(i).setNumber(numChosen);
+					myStocks.get(i).setNumber(myStocks.get(i).getNumber()-numChosen);
+					
 					sellStocks();
 			}
 	}
