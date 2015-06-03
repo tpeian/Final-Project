@@ -7,6 +7,7 @@ public class Stock {
 	private String name;
 	private double value; //$.01-$9999999.99
 	private double riskiness; //.01-.99
+	private int number;
 	
 	//Constructor
 	public Stock(String name, double value, double riskiness){
@@ -43,6 +44,15 @@ public class Stock {
 	public String toString(){
 		return ("Name: " + this.name + "	Current Value: $" + this.value + "	Average growth/decline rate: " + this.riskiness*100 + "%");
 	}
+
+	public int getNumber() {
+		return number;
+	}
+
+	public void setNumber(int number) {
+		this.number = number;
+	}
 	
 }
+
 
