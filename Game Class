@@ -1,7 +1,10 @@
 
 	
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.*;
+
+import javax.swing.JTextArea;
 
 public class Game {
 
@@ -24,12 +27,14 @@ public class Game {
 	Stock stock8 = new Stock("Boeing", 150.00, .02);
 	Stock stock9 = new Stock("Intel", 35.00, .12);
 	Stock stock10 = new Stock("Nike", 105.00, .03);
+	
 	private Stock[] stocks = {stock1, stock2, stock3, stock4, stock5, stock6, stock7, stock8, stock9, stock10};
-	ArrayList<Integer> numStocks = new ArrayList<Integer>(10);
+	ArrayList<Integer> numStocks = new ArrayList<Integer>(20);
 	private int numChosen = 0;
 	private int plus = (int) (Math.random() * 40) - 10;
 	private double overallRisk;
-	
+	private int month = 0;
+	private String space;
 	
 	public Game(){
 		//Player player = new Player();
@@ -46,7 +51,7 @@ public class Game {
 		chooseStocks();
 	}
 		
-	public void buyStocks(){
+	public void chooseStocks(){
 		String chosenStock = "";
 		System.out.println("Please enter a stock name. If you are done choosing stocks, enter \"done\".");
 		chosenStock = stringScan.nextLine();
@@ -56,8 +61,8 @@ public class Game {
 			for (int i = 0; i < stocks.length; i++){
 				if (chosenStock.equalsIgnoreCase(stocks[i].getName())){
 					myStocks.add(stocks[i]);
-					stocks[i].setNumber(stocks[i].getNumber+numChosen);
-					buyStocks();
+					stocks[i].setNumber(numChosen);
+					chooseStocks();
 				}
 			}
 		}
@@ -70,32 +75,36 @@ public class Game {
 			simulate();
 		}
 	}
-	//ian
-	public void sellStocks(){
-		String chosenStock = "";
-		System.out.println("Please enter a stock name. If you are done choosing which stocks to sell, enter \"done\".");
-		chosenStock = stringScan.nextLine();
-		if (chosenStock.equals("done") == false){
-			System.out.println("Please select how many of that stock you would like to sell.");
-			numChosen = intScan.nextInt();
-			for (int i = 0; i < myStocks.size(); i++){
-				if (chosenStock.equalsIgnoreCase(myStocks.get(i).getName())){
-					myStocks.get(i).setNumber(myStocks.get(i).getNumber()-numChosen);
-					sellStocks();
-				}
+	
+	/*public void simulate(){
+		originalPrice = netWorth();
+		System.out.println();
+		System.out.println("Monthly updates:");
+		for (int i = 0; i < 600; i++){
+			for (int j = 0; j < myStocks.size(); j++){
+				monthlyValueUpdate(myStocks.get(j));
 			}
-		}	
-	}
-	//stefa
+			events();
+			System.out.print((i + 1) + ": ");
+			for (int k = 0; k < myStocks.size(); k++){
+				System.out.print(myStocks.get(k).getName() + "(" + myStocks.get(k).getNumber() + "): $" + roundTwoDecimals(myStocks.get(k).getValue()) + "	");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		finalPrice = netWorth();
+		display();
+	}*/
+	
 	public void simulate(){
 		originalPrice = netWorth();
 		System.out.println("Original value: $" + originalPrice);
 		System.out.println();
 		System.out.println("Progress one month: press space then enter");
-		System.out.println("Check progress: enter \"check\"");
+		System.out.println("Check progress: enter \"check\", sell stocks: enter \"sell\", buy stocks: enter \"buy\"");
 		spaceUpdate();
 	}
-	//stefan
+	
 	public void spaceUpdate(){
 		space = stringScan.nextLine();
 		if (space.equals(" ")){
@@ -113,36 +122,95 @@ public class Game {
 		}
 		else if (space.equals("check")){
 			System.out.println("Current value: $" + roundTwoDecimals(netWorth()));
+			System.out.println("Profit: $" + roundTwoDecimals((netWorth()) - originalPrice));
 			spaceUpdate();
 		}
-	}
-	//ian
-	public void simulate(){
-		originalPrice = netWorth();
-		System.out.println();
-		System.out.println("Monthly updates:");
-		for (int i = 0; i < months; i++){
-		buyStocks();
-		sellStocks();
-			for (int j = 0; j < myStocks.size(); j++){
-				monthlyValueUpdate(myStocks.get(j));
-			}
-			events();
-			System.out.print((i + 1) + ": ");
-			for (int k = 0; k < myStocks.size(); k++){
-				System.out.print(myStocks.get(k).getName() + "(" + myStocks.get(k).getNumber() + "): $" + roundTwoDecimals(myStocks.get(k).getValue()) + "	");
-			}
-			System.out.println();
+		else if (space.equals("sell")){
+			sellStocks();
 		}
-		System.out.println();
-		finalPrice = netWorth();
-		display();
+		else if (space.equals("buy")){
+			buyStocks();
+		}
 	}
+	
+	public void buyStocks(){
+		String chosenStock = "";
+		System.out.println("These are your stocks:");
+		for (int i = 0; i < myStocks.size(); i++){
+			System.out.println(myStocks.get(i).getName());
+		}
+		System.out.println("Please enter a stock name. If you are done choosing which stocks to buy, enter \"done\".");
+		chosenStock = stringScan.nextLine();
+		if (chosenStock.equals("done") == false){
+			System.out.println("Please select how many of that stock you would like to buy.");
+			numChosen = intScan.nextInt();
+			for (int i = 0; i < myStocks.size(); i++){
+				if (chosenStock.equalsIgnoreCase(myStocks.get(i).getName())){
+					myStocks.get(i).setNumber(myStocks.get(i).getNumber()+numChosen);
+					System.out.println("Please press space");
+					spaceUpdate();
+				}
+			}
+		}
+	}
+	
+	public void sellStocks(){
+		String chosenStock = "";
+		System.out.println("These are your stocks:");
+		for (int i = 0; i < myStocks.size(); i++){
+			System.out.println(myStocks.get(i).getName());
+		}
+		System.out.println("Please enter a stock name. If you are done choosing which stocks to sell, enter \"done\".");
+		chosenStock = stringScan.nextLine();
+		if (chosenStock.equals("done") == false){
+			System.out.println("Please select how many of that stock you would like to sell.");
+			numChosen = intScan.nextInt();
+			for (int i = 0; i < myStocks.size(); i++){
+				if (chosenStock.equalsIgnoreCase(myStocks.get(i).getName())){
+					myStocks.get(i).setNumber(myStocks.get(i).getNumber()-numChosen);
+					System.out.println("Please press space");
+					spaceUpdate();
+				}
+			}
+		}
+	}
+	
+	/*public void exchangeStocks(){
+		String answer;
+		System.out.println("Would you like to buy or sell stocks?");
+		System.out.println("Enter \"sell\" to sell, \"buy\" to buy, or \"no\" to continue");
+		answer = stringScan.nextLine();
+		if (answer.equalsIgnoreCase("buy")){
+			
+		}
+		else if (answer.equalsIgnoreCase("sell")){
+			String chosenStock = "";
+			System.out.println("Please enter a stock name. If you are done choosing which stocks to sell, enter \"done\".");
+			chosenStock = stringScan.nextLine();
+			if (chosenStock.equals("done") == false){
+				System.out.println("Please select how many of that stock you would like to sell.");
+				numChosen = intScan.nextInt();
+				for (int i = 0; i < myStocks.size(); i++){
+					if (chosenStock.equalsIgnoreCase(myStocks.get(i).getName())){
+						myStocks.get(i).setNumber(myStocks.get(i).getNumber()-numChosen);
+						exchangeStocks();
+					}
+				}
+			}
+		}
+		else if (answer.equalsIgnoreCase("no")){
+			
+		}
+		else{
+			System.out.println("Invalid input.");
+			exchangeStocks();
+		}
+	}*/
 	
 	public void monthlyValueUpdate(Stock myStock){
 		double r = myStock.getRiskiness() * Math.random();
 		int posNeg = (int) ((Math.random() * 100) + 1);
-		if (posNeg <= 50){
+		if (posNeg >= ((myStock.getRiskiness() * 100) + plus)){
 			myStock.setValue(myStock.getValue() + (myStock.getValue() * r));
 		}
 		else
@@ -171,15 +239,8 @@ public class Game {
 		 Random rnd = new Random();
 		 int num = rnd.nextInt(myStocks.size());
 		 int possibility = rnd.nextInt(100)+1;
-		            if(possibility <= 65){
+		            if(possibility <= 70){
 		            	
-		            }
-		            else if(possibility <= 70){
-		            System.out.println();
-		            System.out.println("\tRumors heard about " + myStock(num).getName()+"!");
-		            System.out.println("Stock value increase or decrease by 5%");
-		            System.out.println();
-		            myStocks.get(num).setValue(myStocks.get(num).getValue + (myStocks.get(num).getValue * (rnd.nextDouble(0.10) - 0.05)));
 		            }
 		            else if(possibility <= 75){
 		            	System.out.println();
