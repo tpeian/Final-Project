@@ -82,7 +82,9 @@ public class Game {
 				if (chosenStock.equalsIgnoreCase(myStocks.get(i).getName())){
 					myStocks.get(i).setNumber(myStocks.get(i).getNumber()-numChosen);
 					sellStocks();
+				}
 			}
+		}	
 	}
 	//stefa
 	public void simulate(){
